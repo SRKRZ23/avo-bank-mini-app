@@ -1,0 +1,13 @@
+{
+  "name": "avo-bank-mini-app",
+  "version": "1.0.0",
+  "description": "Telegram Mini-App for AVO Bank Uzbekistan Internship",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
+}
