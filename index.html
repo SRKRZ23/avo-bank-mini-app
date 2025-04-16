@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AVO Bank Uzbekistan Internship Application</title>
+  <title>Заявка на посещение Лекции AVO MIND</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -11,10 +11,10 @@
   <div id="app" class="min-h-screen flex flex-col items-center justify-center p-4">
     <!-- Welcome Screen -->
     <div v-if="currentScreen === 'welcome'" class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full text-center">
-      <img src="/assets/logo.png" alt="AVO Bank Logo" class="mx-auto mb-4 w-32">
-      <h1 class="text-2xl font-bold text-gray-800 mb-4">Добро пожаловать в AVO Bank Uzbekistan!</h1>
+      <img src="/assets/logo.png" alt="AVO MIND Logo" class="mx-auto mb-4 w-32">
+      <h1 class="text-2xl font-bold text-gray-800 mb-4">Добро пожаловать в Заявку на посещение Лекции AVO MIND!</h1>
       <p class="text-gray-600 mb-6">
-        Присоединяйтесь к нашей программе стажировки для студентов! Ознакомьтесь с офертой и заполните анкету.
+        Подайте заявку на участие в лекциях AVO MIND! Ознакомьтесь с офертой и заполните анкету.
       </p>
       <button @click="currentScreen = 'agreement'" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
         Начать
@@ -26,10 +26,10 @@
       <h2 class="text-xl font-bold text-gray-800 mb-4">Публичная оферта и пользовательское соглашение</h2>
       <div class="h-64 overflow-y-auto border p-4 bg-gray-50 rounded mb-4 text-sm text-gray-700">
         <p><strong>Публичная оферта</strong></p>
-        <p>Настоящая публичная оферта (далее — Оферта) регулирует порядок предоставления AVO Bank Uzbekistan (далее — Банк) доступа к использованию Telegram Mini-App для подачи заявки на программу стажировки в соответствии с законодательством Республики Узбекистан...</p>
+        <p>Настоящая публичная оферта (далее — Оферта) регулирует порядок предоставления AVO Bank Uzbekistan (далее — Банк) доступа к использованию Telegram Mini-App для подачи заявки на посещение лекций AVO MIND...</p>
         <p>(Полный текст оферты, включая права и обязанности сторон, обработку персональных данных, сроки действия и т.д., должен быть предоставлен юридическим отделом банка.)</p>
         <p><strong>Пользовательское соглашение</strong></p>
-        <p>Настоящее пользовательское соглашение (далее — Соглашение) регулирует порядок использования Telegram Mini-App, предоставляемого AVO Bank Uzbekistan. Пользователь обязуется предоставлять достоверные данные...</p>
+        <p>Настоящее пользовательское соглашение (далее — Соглашение) регулирует порядок использования Telegram Mini-App, предоставляемого AVO Bank Uzbekistan...</p>
         <p>(Полный текст соглашения, включая конфиденциальность, ответственность сторон, порядок разрешения споров и т.д., должен быть предоставлен юридическим отделом банка.)</p>
       </div>
       <label class="flex items-center mb-4">
@@ -37,7 +37,7 @@
         <span class="text-sm text-gray-700">Я прочитал(а) и согласен(на) с условиями</span>
       </label>
       <button 
-        @click="goToGoogleForm" 
+        @click="handleAgreement" 
         :disabled="!agreementAccepted"
         class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
         :class="{ 'opacity-50 cursor-not-allowed': !agreementAccepted }"
@@ -50,7 +50,6 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <script>
     const { createApp } = Vue;
-
     createApp({
       data() {
         return {
@@ -59,9 +58,15 @@
         };
       },
       methods: {
-        goToGoogleForm() {
+        handleAgreement() {
           if (this.agreementAccepted) {
-            window.location.href = 'https://docs.google.com/forms/d/1ZBJ_B04g9iINMjkBbuuArEm0MQ0iSoQMEVtAju-uQiI/viewform';
+            console.log('Sending agreement data:', { agreementAccepted: true });
+            if (window.Telegram.WebApp) {
+              window.Telegram.WebApp.sendData(JSON.stringify({ agreementAccepted: true }));
+              window.location.href = 'https://docs.google.com/forms/d/1ZBJ_B04g9iINMjkBbuuArEm0MQ0iSoQMEVtAju-uQiI/viewform';
+            } else {
+              window.location.href = 'https://docs.google.com/forms/d/1ZBJ_B04g9iINMjkBbuuArEm0MQ0iSoQMEVtAju-uQiI/viewform';
+            }
           }
         }
       },
